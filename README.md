@@ -1,4 +1,4 @@
-# 🎬 Screen Recorder Studio
+# 🎬 Windows Screen Recorder Studio
 > Record your screen. Make it look good. No basic editing needed.
 
 ## What is this?
