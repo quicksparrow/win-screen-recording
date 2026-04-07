@@ -1,0 +1,48 @@
+{
+  "name": "ai-screen-recorder-desktop",
+  "version": "0.1.0",
+  "description": "Windows-first AI Screen Recorder desktop application",
+  "private": true,
+  "main": "dist-electron/main/main.js",
+  "scripts": {
+    "dev": "concurrently -k \"npm:dev:renderer\" \"npm:dev:main\" \"npm:dev:electron\"",
+    "dev:renderer": "vite",
+    "dev:main": "tsc -p tsconfig.electron.json -w",
+    "dev:electron": "wait-on tcp:5173 file:dist-electron/main/main.js && cross-env ELECTRON_RUN_AS_NODE= VITE_DEV_SERVER_URL=http://localhost:5173 electron .",
+    "prepare:ffmpeg": "node scripts/prepare-ffmpeg.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.electron.json --noEmit",
+    "verify:lockfile": "node -e \"const fs=require('node:fs'); if(!fs.existsSync('package-lock.json')){console.error('Missing package-lock.json. Run npm install and commit the lockfile.'); process.exit(1);} console.log('Lockfile present.');\"",
+    "audit:deps": "npm audit --omit=dev",
+    "audit:full": "npm audit",
+    "build:renderer": "vite build",
+    "build:main": "tsc -p tsconfig.electron.json",
+    "build": "npm run prepare:ffmpeg && npm run build:renderer && npm run build:main",
+    "dist:win": "npm run build && electron-builder --win nsis"
+  },
+  "engines": {
+    "node": ">=22.18 <25",
+    "npm": ">=10"
+  },
+  "packageManager": "npm@10.9.2",
+  "dependencies": {
+    "ffmpeg-static": "5.2.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.7.4",
+    "@types/react": "18.3.7",
+    "@types/react-dom": "18.3.0",
+    "@vitejs/plugin-react": "4.7.0",
+    "autoprefixer": "10.4.20",
+    "concurrently": "9.0.1",
+    "cross-env": "7.0.3",
+    "electron": "40.0.0",
+    "electron-builder": "26.8.1",
+    "postcss": "8.4.47",
+    "tailwindcss": "3.4.13",
+    "typescript": "5.6.2",
+    "vite": "5.4.21",
+    "wait-on": "8.0.1"
+  }
+}

@@ -1,0 +1,43 @@
+appId: com.screenrecorderstudio.desktop
+productName: AI Screen Recorder
+artifactName: AI-Screen-Recorder-${version}-setup.${ext}
+directories:
+  output: release
+electronDist: node_modules/electron/dist
+files:
+  - dist/renderer/**
+  - dist-electron/**
+  - package.json
+asar: true
+extraResources:
+  - from: resources/ffmpeg
+    to: ffmpeg
+    filter:
+      - "**/*"
+  - from: wallpapers
+    to: wallpapers
+    filter:
+      - "*.png"
+      - "*.jpg"
+      - "*.jpeg"
+      - "*.webp"
+  - from: design
+    to: design
+    filter:
+      - "*.png"
+      - "*.jpg"
+      - "*.jpeg"
+      - "*.webp"
+  - from: build/icon.png
+    to: icon.png
+win:
+  icon: build/icon.ico
+  target:
+    - nsis
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  installerIcon: build/icon.ico
+  uninstallerIcon: build/icon.ico
+  installerHeaderIcon: build/icon.ico
